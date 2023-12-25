@@ -2,7 +2,7 @@
   "name": "cors-proxy",
   "version": "1.0.0",
   "description": "Express CORS-proxy server to retireve data.",
-  "main": "server.js",
+  "main": "dist/server.js",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
@@ -11,9 +11,22 @@
     "request": "^2.88.2"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "node dist/server.js",
+    "build": "tsc",
+    "lint": "eslint --ext .ts .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.10.5",
+    "@types/request": "^2.48.12",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "typescript": "^5.3.3"
+  }
 }
