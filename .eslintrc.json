@@ -1,42 +1,33 @@
 {
-    "root": true,
-    "env": {
-        "browser": true,
-        "commonjs": true,
-        "es2021": true,
-        "node": true
-    },
-    "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended-type-checked"
-    ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaVersion": "latest",
-        "sourceType": "commonjs",
-        "project": true,
-        "tsconfigRootDir": "./"
-    },
-    "plugins": [
-        "@typescript-eslint",
-        "promise"
-    ],
-    "ignorePatterns": ["./dist/"],
-    "rules": {
-        "@typescript-eslint/interface-name-prefix": "off",
-        "@typescript-eslint/ban-ts-comment": "error",
-        "@typescript-eslint/no-non-null-assertion": "off",
-        "@typescript-eslint/explicit-module-boundary-types": "off",
-        "@typescript-eslint/no-empty-function": "off",
-        "@typescript-eslint/no-explicit-any": "error",
-        "semi": [
-            "error",
-            "always"
-        ],
-        "quotes": "off",
-        "@typescript-eslint/quotes": [
-            "error",
-            "single"
-        ]
-    }
+  "root": true,
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended-type-checked"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "commonjs",
+    "project": true,
+    "tsconfigRootDir": "./"
+  },
+  "plugins": ["@typescript-eslint"],
+  "ignorePatterns": ["./dist/"],
+  "rules": {
+    "@typescript-eslint/interface-name-prefix": "off",
+    "@typescript-eslint/ban-ts-comment": "error",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-explicit-any": "error",
+    "semi": ["error", "always"],
+    "quotes": "off",
+    "@typescript-eslint/quotes": ["error", "single"]
+  }
 }

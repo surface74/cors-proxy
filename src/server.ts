@@ -9,6 +9,12 @@ dotenv.config();
 interface IRequestData {
   endpoint: string;
   query: string;
+  variables?: string;
+  requestHeaders?: string;
+}
+
+interface IRequestHeaders {
+  [key: string]: string;
 }
 
 const app = express();
@@ -54,17 +60,21 @@ app.get(
 app.post('/proxy', (req: Request<unknown, unknown, IRequestData>, res) => {
   console.log('[POST] /proxy');
 
-  const { endpoint, query } = req.body;
+  const { endpoint, query, variables, requestHeaders } = req.body;
+
+  const parsedHeaders = JSON.parse(requestHeaders ?? '{}') as IRequestHeaders;
+
+  const headers = {
+    'Content-Type': 'application/json',
+    ...parsedHeaders,
+  };
 
   request
     .post(endpoint, {
-      body: JSON.stringify({ query }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      body: JSON.stringify({ query, variables }),
+      headers,
     })
     .on('error', function (err) {
-      res.statusCode = 400;
       res.send({ errors: [{ message: err.message, stack: err.stack ?? '' }] });
     })
     .pipe(res);

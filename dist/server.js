@@ -41,13 +41,13 @@ app.get('/proxy', (req, res) => {
 });
 app.post('/proxy', (req, res) => {
     console.log('[POST] /proxy');
-    const { endpoint, query } = req.body;
+    const { endpoint, query, variables, requestHeaders } = req.body;
+    const parsedHeaders = JSON.parse(requestHeaders !== null && requestHeaders !== void 0 ? requestHeaders : '{}');
+    const headers = Object.assign(Object.assign({}, parsedHeaders), { 'Content-Type': 'application/json' });
     request_1.default
         .post(endpoint, {
-        body: JSON.stringify({ query }),
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        body: JSON.stringify({ query, variables }),
+        headers,
     })
         .on('error', function (err) {
         var _a;
