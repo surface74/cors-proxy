@@ -28,15 +28,12 @@ app.use(express.json());
 app.options('*', cors());
 
 app.get('/', (req, res) => {
-  console.log('[GET] root');
   res.send(Message.WELCOME);
 });
 
 app.get(
   '/proxy',
   (req: Request<unknown, unknown, unknown, IRequestData>, res) => {
-    console.log('[GET] /proxy');
-
     const params = req.query;
 
     const endpoint = decodeURIComponent(params.endpoint);
@@ -107,4 +104,5 @@ app.post('/proxy', (req: Request<unknown, unknown, IRequestData>, res) => {
     .pipe(res);
 });
 
+// Message about server has been started
 app.listen(port, () => console.log(`${Message.STARTED} ${port}...`));
