@@ -5,6 +5,8 @@ import request from 'request';
 import dotenv from 'dotenv';
 import { Message } from './message';
 
+const EMPTY_JSON_STRING= '{}';
+
 dotenv.config();
 
 interface IRequestData {
@@ -28,33 +30,8 @@ app.use(express.json());
 app.options('*', cors());
 
 app.get('/', (req, res) => {
-  res.send(Message.WELCOME);
+  res.send(`${Message.WELCOME} ${Message.HELP}`);
 });
-
-app.get(
-  '/proxy',
-  (req: Request<unknown, unknown, unknown, IRequestData>, res) => {
-    const params = req.query;
-
-    const endpoint = decodeURIComponent(params.endpoint);
-    const query = decodeURIComponent(params.query);
-
-    request
-      .post(endpoint, {
-        body: JSON.stringify({ query }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .on('error', function (error) {
-        res.statusCode = 400;
-        res.send({
-          errors: [{ message: error.message, stack: error.stack ?? '' }],
-        });
-      })
-      .pipe(res);
-  }
-);
 
 app.post('/proxy', (req: Request<unknown, unknown, IRequestData>, res) => {
   const { endpoint, query, variables, requestHeaders, operationName } =
@@ -62,7 +39,7 @@ app.post('/proxy', (req: Request<unknown, unknown, IRequestData>, res) => {
 
   let parsedHeaders: IRequestHeaders = {};
   try {
-    parsedHeaders = JSON.parse(requestHeaders || '{}') as IRequestHeaders;
+    parsedHeaders = JSON.parse(requestHeaders || EMPTY_JSON_STRING) as IRequestHeaders;
   } catch (error) {
     res.send({
       errors: [{ message: Message.INVALID_HEADERS }],
@@ -76,7 +53,7 @@ app.post('/proxy', (req: Request<unknown, unknown, IRequestData>, res) => {
 
   let parsedVariables: IRequestHeaders = {};
   try {
-    parsedVariables = JSON.parse(variables || '{}') as IRequestHeaders;
+    parsedVariables = JSON.parse(variables || EMPTY_JSON_STRING) as IRequestHeaders;
   } catch (error) {
     res.send({
       errors: [{ message: Message.INVALID_VARIABLES }],
